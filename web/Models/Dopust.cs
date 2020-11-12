@@ -6,6 +6,7 @@ namespace web.Models
 {
     public class Dopust
     {
+        public int ID { get; set; }
         public DateTime Datum { get; set; }
         public DateTime UraZacetka { get; set; }
         public DateTime UraKonca { get; set; }

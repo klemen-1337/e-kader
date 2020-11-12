@@ -28,7 +28,7 @@ namespace web
             services.AddControllersWithViews();
 
                 services.AddDbContext<EkadriContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("EkadriContext")));
 
         }
 

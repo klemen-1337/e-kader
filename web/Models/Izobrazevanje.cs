@@ -7,6 +7,7 @@ namespace web.Models
 
     public class Izobrazevanje
     {
+        public int ID { get; set; }
         public string Naziv  { get; set; }
         public DateTime Datum { get; set;}
         public string Cena { get; set; }

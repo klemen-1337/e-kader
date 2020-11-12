@@ -6,7 +6,7 @@ namespace web.Models
 
     public class DelovnaMesta
     {
-        public int DelovnoMestoID { get; set; }
+        public int ID { get; set; }
 
         public string Oddelek { get; set;}
 
