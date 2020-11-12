@@ -13,6 +13,7 @@ namespace web.Models
         public DateTime DatumRojstva { get; set; }
         public DateTime DatumZaposlitve { get; set; }
         public string Spol { get; set; }
+        public string PhotoPath { get; set; }
         
     }
 }

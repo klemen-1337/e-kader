@@ -150,6 +150,9 @@ namespace web.Migrations
                     b.Property<string>("Naslov")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PhotoPath")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Priimek")
                         .HasColumnType("nvarchar(max)");
 

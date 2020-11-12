@@ -4,68 +4,25 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Pregled zaposlenih</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Dodaj novo-zaposlenega</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Ime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Priimek)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Naslov)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefon)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DatumRojstva)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DatumZaposlitve)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Spol)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Priimek)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Naslov)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefon)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DatumRojstva)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DatumZaposlitve)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Spol)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
+
+<div class ="card-columns">
+@foreach (var item in Model) {   
+    <div class="card">
+        <img src="https://www.pngitem.com/pimgs/m/236-2369728_unknown-person-hd-png-download.png" class="card-img-top" alt="Slika zaposlenega">
+        <div class="card-body">
+            <h5 class="card-title">@Html.DisplayFor(modelItem => item.Ime) @Html.DisplayFor(modelItem => item.Priimek)</h5>
+            <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayNameFor(model => model.Naslov): @Html.DisplayFor(modelItem => item.Naslov)</h6>
+            <p class="card-text">@Html.DisplayNameFor(model => model.Telefon): @Html.DisplayFor(modelItem => item.Telefon)</p>
+            <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary">Uredi</a> 
+            <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-primary">Podrobno</a> 
+            <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Izbriši</a>
+        </div>
+    </div>
 }
-    </tbody>
-</table>
+</div>
+

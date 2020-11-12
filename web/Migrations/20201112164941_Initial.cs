@@ -68,6 +68,7 @@ namespace web.Migrations
                     DatumRojstva = table.Column<DateTime>(nullable: false),
                     DatumZaposlitve = table.Column<DateTime>(nullable: false),
                     Spol = table.Column<string>(nullable: true),
+                    PhotoPath = table.Column<string>(nullable: true),
                     DelovnaMestaID = table.Column<int>(nullable: true),
                     DelovneUreID = table.Column<int>(nullable: true),
                     DopustID = table.Column<int>(nullable: true)
