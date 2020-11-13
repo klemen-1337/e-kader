@@ -1,9 +1,10 @@
 using web.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace web.Data
 {
-    public class EkadriContext : DbContext
+    public class EkadriContext : IdentityDbContext<Uporabniki>
     {
         public EkadriContext(DbContextOptions<EkadriContext> options) : base(options)
         {

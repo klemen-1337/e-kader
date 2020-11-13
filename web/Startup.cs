@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using web.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using web.Models;
 
 namespace web
 {
@@ -29,6 +31,11 @@ namespace web
 
                 services.AddDbContext<EkadriContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("EkadriContext")));
+                services.AddIdentity<Uporabniki, IdentityRole>(options => 
+                    options.Stores.MaxLengthForKeys = 128)
+                        .AddEntityFrameworkStores<EkadriContext>()
+                        .AddDefaultUI()
+                        .AddDefaultTokenProviders();
 
         }
 
@@ -50,6 +57,9 @@ namespace web
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -57,6 +67,7 @@ namespace web
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }
