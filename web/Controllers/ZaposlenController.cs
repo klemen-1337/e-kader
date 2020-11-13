@@ -157,11 +157,13 @@ namespace web.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var zaposlen = await _context.Zaposleni.FindAsync(id);
-            
             var uporabnik = await _context.Users
                 .FirstOrDefaultAsync(b => b.Zaposlen.ID == id);
-     
-            _context.Users.Remove(uporabnik);
+            
+            if (uporabnik != null){
+                _context.Users.Remove(uporabnik);
+            }
+           
             _context.Zaposleni.Remove(zaposlen);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
