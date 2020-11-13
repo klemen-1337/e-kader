@@ -4,11 +4,29 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Pregled zaposlenih</h1>
+<h1 style="margin: 5rem 0rem;">Pregled zaposlenih</h1>
 
-<p>
-    <a asp-action="Create">Dodaj novo-zaposlenega</a>
-</p>
+<div class="container">
+    <div class="row">
+        <div class="col" style="padding: 0px;">
+            <p>
+                <a asp-action="Create" class="btn btn-success">Dodaj novo-zaposlenega</a>
+            </p>
+        </div>
+        <div class="col" style="text-align: right; padding: 0px;">
+            <form asp-action="Index" method="get">
+                <div class="form-actions no-color">
+                    <p>
+                        Išči po imenu: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                        <input type="submit" value="Išči" class="btn btn-primary" />
+                        <br />
+                        <a asp-action="Index">Nazaj na celoten seznam</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <div class ="card-columns">
 @foreach (var item in Model) {   

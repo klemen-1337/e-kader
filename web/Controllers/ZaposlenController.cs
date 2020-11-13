@@ -20,9 +20,26 @@ namespace web.Controllers
         }
 
         // GET: Zaposlen
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index( string searchString,                                                
+                                                string sortOrder,
+                                                string currentFilter)
         {
-            return View(await _context.Zaposleni.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["CurrentFilter"] = searchString;
+            
+            var zaposleni = from z in _context.Zaposleni
+                            select z;
+                            
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                zaposleni = zaposleni.Where(z => z.Priimek.Contains(searchString)
+                                        || z.Ime.Contains(searchString)
+                                        || z.Naslov.Contains(searchString)
+                                        || z.Spol.Contains(searchString)
+                                        );
+            }
+            //return View(await _context.Zaposleni.ToListAsync());
+            return View(await zaposleni.AsNoTracking().ToListAsync());
         }
 
         // GET: Zaposlen/Details/5
