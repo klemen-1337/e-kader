@@ -6,13 +6,11 @@
 
 <h1>@ViewData["Title"]</h1>
 
-
-    
-         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+         <form enctype="multipart/form-data" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="row">
                 <div class="col-md-4">
-                <h4>Create a new account.</h4>
+                <h4>Ustvari nov račun</h4>
                 <hr />
                 
                 <div class="form-group">
@@ -69,14 +67,26 @@
                     <input asp-for="Input.Spol" class="form-control" />
                     <span asp-validation-for="Input.Spol" class="text-danger"></span>
                 </div>
-                <button type="submit" class="btn btn-primary">Register</button>
+                <div class="form-group">  
+                    <label asp-for="Input.Slika" class="control-label"></label>  
+                        <div class="custom-file">  
+                            <input asp-for="Input.Slika" class="custom-file-input" id="customFile">  
+                            <label class="custom-file-label" for="customFile">Izberi sliko</label>  
+                        </div>  
+                    <span asp-validation-for="Input.Slika" class="text-danger"></span>  
+                </div>  
+                <button type="submit" class="btn btn-primary">Registriraj uporabnika</button>
             </div>
             </div>
         </form>
-   
-    
-     
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script type="text/javascript">  
+        // Ime datoteke ob izbiri. 
+        $(".custom-file-input").on("change", function () {  
+            var fileName = $(this).val().split("\\").pop();  
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);  
+        });  
+    </script>  
 }

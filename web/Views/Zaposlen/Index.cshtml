@@ -12,6 +12,7 @@
             <p>
                 @* asp-action="Create" *@
                 <a  href="/Identity/Account/Register" class="btn btn-success">Dodaj novo-zaposlenega</a>
+                <!--<a  asp-action="Create" class="btn btn-success">Dodaj novo-zaposlenega</a>-->
             </p>
         </div>
         <div class="col" style="text-align: right; padding: 0px;">
@@ -32,7 +33,16 @@
 <div class ="card-columns">
 @foreach (var item in Model) {   
     <div class="card">
-        <img src="https://www.pngitem.com/pimgs/m/236-2369728_unknown-person-hd-png-download.png" class="card-img-top" alt="Slika zaposlenega">
+        @{
+            var photoPath2 = "";
+            if(@item.PhotoPath != null){
+                photoPath2 = "/Images/" + item.PhotoPath;
+            }else{
+                photoPath2 = "https://www.pngitem.com/pimgs/m/236-2369728_unknown-person-hd-png-download.png";
+            }
+
+        }
+        <img src="@photoPath2" class="card-img-top" width="350px" height="270px" alt="Slika zaposlenega">
         <div class="card-body">
             <h5 class="card-title">@Html.DisplayFor(modelItem => item.Ime) @Html.DisplayFor(modelItem => item.Priimek)</h5>
             <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayNameFor(model => model.Naslov): @Html.DisplayFor(modelItem => item.Naslov)</h6>

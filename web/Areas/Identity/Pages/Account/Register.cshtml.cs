@@ -14,6 +14,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using web.Models;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace web.Areas.Identity.Pages.Account
 {
@@ -24,17 +27,20 @@ namespace web.Areas.Identity.Pages.Account
         private readonly UserManager<Uporabniki> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
         public RegisterModel(
             UserManager<Uporabniki> userManager,
             SignInManager<Uporabniki> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender, 
+            IWebHostEnvironment hostEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            webHostEnvironment = hostEnvironment;
         }
 
         [BindProperty]
@@ -93,6 +99,11 @@ namespace web.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "Spol")]
             public String Spol {get; set;}
+            
+            [Required]
+            [Display(Name = "Slika")]
+            public IFormFile Slika {get; set;}
+
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -101,15 +112,37 @@ namespace web.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
+        private string UploadedFile(ZaposlenViewModel model)  
+        {  
+            string uniqueFileName = null;  
+  
+            if (model.Slika != null)  
+            {  
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "Images");  
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Slika.FileName;  
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);  
+                using (var fileStream = new FileStream(filePath, FileMode.Create))  
+                {  
+                    model.Slika.CopyTo(fileStream);  
+                }  
+            }  
+            return uniqueFileName;  
+        }    
+
+
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var zapTmp = new Zaposlen{Ime=Input.Ime,Priimek=Input.Priimek,Naslov=Input.Naslov, Telefon=Input.Telefon, DatumRojstva=Input.DatumRojstva, DatumZaposlitve=Input.DatumZaposlitve, Spol=Input.Spol};
+                var zapView = new ZaposlenViewModel{Ime=Input.Ime,Priimek=Input.Priimek,Naslov=Input.Naslov, Telefon=Input.Telefon, DatumRojstva=Input.DatumRojstva, DatumZaposlitve=Input.DatumZaposlitve, Spol=Input.Spol, Slika=Input.Slika};
+                string uniqueFileName = UploadedFile(zapView);  
+                var zapTmp = new Zaposlen{Ime=Input.Ime,Priimek=Input.Priimek,Naslov=Input.Naslov, Telefon=Input.Telefon, DatumRojstva=Input.DatumRojstva, DatumZaposlitve=Input.DatumZaposlitve, Spol=Input.Spol, PhotoPath = uniqueFileName};
                 var user = new Uporabniki { UserName = Input.Email, Email = Input.Email, Zaposlen=zapTmp };
                 
+
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

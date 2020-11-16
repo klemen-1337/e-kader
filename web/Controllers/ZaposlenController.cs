@@ -8,16 +8,21 @@ using Microsoft.EntityFrameworkCore;
 using web.Data;
 using web.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+
 namespace web.Controllers
 {
     [Authorize]
     public class ZaposlenController : Controller
     {
         private readonly EkadriContext _context;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public ZaposlenController(EkadriContext context)
+        public ZaposlenController(EkadriContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            webHostEnvironment = hostEnvironment;
         }
 
         // GET: Zaposlen
@@ -42,6 +47,30 @@ namespace web.Controllers
             //return View(await _context.Zaposleni.ToListAsync());
             return View(await zaposleni.AsNoTracking().ToListAsync());
         }
+
+        public IActionResult New()  
+        {  
+            return View();  
+        }  
+  
+        [HttpPost]  
+        [ValidateAntiForgeryToken]  
+        private string UploadedFile(ZaposlenViewModel model)  
+        {  
+            string uniqueFileName = null;  
+  
+            if (model.Slika != null)  
+            {  
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "Images");  
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Slika.FileName;  
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);  
+                using (var fileStream = new FileStream(filePath, FileMode.Create))  
+                {  
+                    model.Slika.CopyTo(fileStream);  
+                }  
+            }  
+            return uniqueFileName;  
+        }    
 
         // GET: Zaposlen/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -72,19 +101,18 @@ namespace web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Ime,Priimek,Naslov,Telefon,DatumRojstva,DatumZaposlitve,Spol")] Zaposlen zaposlen)
+        public async Task<IActionResult> Create(ZaposlenViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(zaposlen);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(zaposlen);
+            if (ModelState.IsValid)  
+            {                
+                await _context.SaveChangesAsync();  
+                return RedirectToAction(nameof(Index));  
+            }  
+            return View();  
         }
 
         // GET: Zaposlen/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -104,7 +132,7 @@ namespace web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Ime,Priimek,Naslov,Telefon,DatumRojstva,DatumZaposlitve,Spol")] Zaposlen zaposlen)
+         public async Task<IActionResult> Edit(int id, [Bind("ID,Ime,Priimek,Naslov,Telefon,DatumRojstva,DatumZaposlitve,Spol")] Zaposlen zaposlen)
         {
             if (id != zaposlen.ID)
             {
