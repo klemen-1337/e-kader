@@ -192,7 +192,18 @@ namespace web.Controllers
             if (uporabnik != null){
                 _context.Users.Remove(uporabnik);
             }
-           
+            
+            string path = zaposlen.PhotoPath;
+
+            if(path != null){         
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "Images");
+                string filePath = Path.Combine(uploadsFolder, path);
+                Console.WriteLine(path);
+                if(System.IO.File.Exists(filePath)){
+                    System.IO.File.Delete(filePath);
+                }
+            }
+            
             _context.Zaposleni.Remove(zaposlen);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
