@@ -6,14 +6,14 @@ namespace web.Models
 
     public class DelovnaMesta
     {
-        public int ID { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int DelovnaMestaID { get; set; }
 
         public string Oddelek { get; set;}
 
         public string Lokacija { get; set; }
-        public Zaposlen Zaposlen { get; set; }
         public string NazivDelovnegaMesta { get; set; }
-        public ICollection<Zaposlen> Zaposleni {get;set;}
+        public ICollection<Zaposlitve> Zaposlitve {get;set;}
 
     }
 }

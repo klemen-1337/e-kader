@@ -10,7 +10,7 @@ using web.Data;
 namespace web.Migrations
 {
     [DbContext(typeof(EkadriContext))]
-    [Migration("20201116121956_Initial")]
+    [Migration("20201117222808_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,10 +158,8 @@ namespace web.Migrations
 
             modelBuilder.Entity("web.Models.DelovnaMesta", b =>
                 {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("DelovnaMestaID")
+                        .HasColumnType("int");
 
                     b.Property<int?>("IzobrazevanjeID")
                         .HasColumnType("int");
@@ -175,14 +173,9 @@ namespace web.Migrations
                     b.Property<string>("Oddelek")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ZaposlenID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
+                    b.HasKey("DelovnaMestaID");
 
                     b.HasIndex("IzobrazevanjeID");
-
-                    b.HasIndex("ZaposlenID");
 
                     b.ToTable("DelovnaMesta");
                 });
@@ -342,9 +335,6 @@ namespace web.Migrations
                     b.Property<DateTime>("DatumZaposlitve")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DelovnaMestaID")
-                        .HasColumnType("int");
-
                     b.Property<int?>("DelovneUreID")
                         .HasColumnType("int");
 
@@ -371,13 +361,39 @@ namespace web.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("DelovnaMestaID");
-
                     b.HasIndex("DelovneUreID");
 
                     b.HasIndex("DopustID");
 
                     b.ToTable("Zaposleni");
+                });
+
+            modelBuilder.Entity("web.Models.Zaposlitve", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DatumZaposlitve")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DelovnaMestaID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DelovnoMestoID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ZaposlenID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("DelovnaMestaID");
+
+                    b.HasIndex("ZaposlenID");
+
+                    b.ToTable("Zaposlitve");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -436,10 +452,6 @@ namespace web.Migrations
                     b.HasOne("web.Models.Izobrazevanje", null)
                         .WithMany("DelovnaMesta")
                         .HasForeignKey("IzobrazevanjeID");
-
-                    b.HasOne("web.Models.Zaposlen", "Zaposlen")
-                        .WithMany()
-                        .HasForeignKey("ZaposlenID");
                 });
 
             modelBuilder.Entity("web.Models.Uporabniki", b =>
@@ -451,10 +463,6 @@ namespace web.Migrations
 
             modelBuilder.Entity("web.Models.Zaposlen", b =>
                 {
-                    b.HasOne("web.Models.DelovnaMesta", null)
-                        .WithMany("Zaposleni")
-                        .HasForeignKey("DelovnaMestaID");
-
                     b.HasOne("web.Models.DelovneUre", null)
                         .WithMany("Zaposleni")
                         .HasForeignKey("DelovneUreID");
@@ -462,6 +470,19 @@ namespace web.Migrations
                     b.HasOne("web.Models.Dopust", null)
                         .WithMany("Zaposleni")
                         .HasForeignKey("DopustID");
+                });
+
+            modelBuilder.Entity("web.Models.Zaposlitve", b =>
+                {
+                    b.HasOne("web.Models.DelovnaMesta", "DelovnaMesta")
+                        .WithMany("Zaposlitve")
+                        .HasForeignKey("DelovnaMestaID");
+
+                    b.HasOne("web.Models.Zaposlen", "Zaposlen")
+                        .WithMany("Zaposlitve")
+                        .HasForeignKey("ZaposlenID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

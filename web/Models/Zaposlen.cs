@@ -14,6 +14,7 @@ namespace web.Models
         public DateTime DatumZaposlitve { get; set; }
         public string Spol { get; set; }
         public string PhotoPath { get; set; }
+        public ICollection<Zaposlitve> Zaposlitve { get; set; }
         
     }
 }

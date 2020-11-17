@@ -1,0 +1,41 @@
+@model web.Models.DelovnaMesta
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Uredi</h1>
+
+<h4>DelovnaMesta</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="DelovnaMestaID" />
+            <div class="form-group">
+                <label asp-for="Oddelek" class="control-label"></label>
+                <input asp-for="Oddelek" class="form-control" />
+                <span asp-validation-for="Oddelek" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lokacija" class="control-label"></label>
+                <input asp-for="Lokacija" class="form-control" />
+                <span asp-validation-for="Lokacija" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NazivDelovnegaMesta" class="control-label"></label>
+                <input asp-for="NazivDelovnegaMesta" class="form-control" />
+                <span asp-validation-for="NazivDelovnegaMesta" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Nazaj</a>
+</div>
+

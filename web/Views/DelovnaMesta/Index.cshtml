@@ -1,0 +1,47 @@
+@model IEnumerable<web.Models.DelovnaMesta>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Pregled</h1>
+
+<p>
+    <a asp-action="Create">Ustvari novo delovno mesto</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Oddelek)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lokacija)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NazivDelovnegaMesta)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Oddelek)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lokacija)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NazivDelovnegaMesta)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.DelovnaMestaID">Uredi</a> |
+                <a asp-action="Details" asp-route-id="@item.DelovnaMestaID">Podrobno</a> |
+                <a asp-action="Delete" asp-route-id="@item.DelovnaMestaID">Izbriši</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

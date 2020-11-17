@@ -16,5 +16,7 @@ namespace web.Data
         public DbSet<Izobrazevanje> Izobrazevanja { get; set; }
         public DbSet<Zaposlen> Zaposleni { get; set; }
 
+        public DbSet<Zaposlitve> Zaposlitve { get; set; }
+
     }
 }

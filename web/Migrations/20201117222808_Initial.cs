@@ -91,67 +91,6 @@ namespace web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserRoles",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserLogins",
-                columns: table => new
-                {
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserTokens",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
-                    Value = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Zaposleni",
                 columns: table => new
                 {
@@ -165,7 +104,6 @@ namespace web.Migrations
                     DatumZaposlitve = table.Column<DateTime>(nullable: false),
                     Spol = table.Column<string>(nullable: true),
                     PhotoPath = table.Column<string>(nullable: true),
-                    DelovnaMestaID = table.Column<int>(nullable: true),
                     DelovneUreID = table.Column<int>(nullable: true),
                     DopustID = table.Column<int>(nullable: true)
                 },
@@ -182,6 +120,27 @@ namespace web.Migrations
                         name: "FK_Zaposleni_Dopusti_DopustID",
                         column: x => x.DopustID,
                         principalTable: "Dopusti",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DelovnaMesta",
+                columns: table => new
+                {
+                    DelovnaMestaID = table.Column<int>(nullable: false),
+                    Oddelek = table.Column<string>(nullable: true),
+                    Lokacija = table.Column<string>(nullable: true),
+                    NazivDelovnegaMesta = table.Column<string>(nullable: true),
+                    IzobrazevanjeID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DelovnaMesta", x => x.DelovnaMestaID);
+                    table.ForeignKey(
+                        name: "FK_DelovnaMesta_Izobrazevanja_IzobrazevanjeID",
+                        column: x => x.IzobrazevanjeID,
+                        principalTable: "Izobrazevanja",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -219,32 +178,116 @@ namespace web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DelovnaMesta",
+                name: "Zaposlitve",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Oddelek = table.Column<string>(nullable: true),
-                    Lokacija = table.Column<string>(nullable: true),
-                    ZaposlenID = table.Column<int>(nullable: true),
-                    NazivDelovnegaMesta = table.Column<string>(nullable: true),
-                    IzobrazevanjeID = table.Column<int>(nullable: true)
+                    ZaposlenID = table.Column<int>(nullable: false),
+                    DelovnoMestoID = table.Column<int>(nullable: false),
+                    DatumZaposlitve = table.Column<DateTime>(nullable: false),
+                    DelovnaMestaID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DelovnaMesta", x => x.ID);
+                    table.PrimaryKey("PK_Zaposlitve", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_DelovnaMesta_Izobrazevanja_IzobrazevanjeID",
-                        column: x => x.IzobrazevanjeID,
-                        principalTable: "Izobrazevanja",
-                        principalColumn: "ID",
+                        name: "FK_Zaposlitve_DelovnaMesta_DelovnaMestaID",
+                        column: x => x.DelovnaMestaID,
+                        principalTable: "DelovnaMesta",
+                        principalColumn: "DelovnaMestaID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_DelovnaMesta_Zaposleni_ZaposlenID",
+                        name: "FK_Zaposlitve_Zaposleni_ZaposlenID",
                         column: x => x.ZaposlenID,
                         principalTable: "Zaposleni",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
+                    ProviderDisplayName = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
+                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    Value = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -297,16 +340,6 @@ namespace web.Migrations
                 column: "IzobrazevanjeID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DelovnaMesta_ZaposlenID",
-                table: "DelovnaMesta",
-                column: "ZaposlenID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Zaposleni_DelovnaMestaID",
-                table: "Zaposleni",
-                column: "DelovnaMestaID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Zaposleni_DelovneUreID",
                 table: "Zaposleni",
                 column: "DelovneUreID");
@@ -316,53 +349,19 @@ namespace web.Migrations
                 table: "Zaposleni",
                 column: "DopustID");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_AspNetUserRoles_AspNetUsers_UserId",
-                table: "AspNetUserRoles",
-                column: "UserId",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+            migrationBuilder.CreateIndex(
+                name: "IX_Zaposlitve_DelovnaMestaID",
+                table: "Zaposlitve",
+                column: "DelovnaMestaID");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_AspNetUserClaims_AspNetUsers_UserId",
-                table: "AspNetUserClaims",
-                column: "UserId",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_AspNetUserLogins_AspNetUsers_UserId",
-                table: "AspNetUserLogins",
-                column: "UserId",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_AspNetUserTokens_AspNetUsers_UserId",
-                table: "AspNetUserTokens",
-                column: "UserId",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Zaposleni_DelovnaMesta_DelovnaMestaID",
-                table: "Zaposleni",
-                column: "DelovnaMestaID",
-                principalTable: "DelovnaMesta",
-                principalColumn: "ID",
-                onDelete: ReferentialAction.Restrict);
+            migrationBuilder.CreateIndex(
+                name: "IX_Zaposlitve_ZaposlenID",
+                table: "Zaposlitve",
+                column: "ZaposlenID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_DelovnaMesta_Zaposleni_ZaposlenID",
-                table: "DelovnaMesta");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -379,25 +378,28 @@ namespace web.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Zaposlitve");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "DelovnaMesta");
+
+            migrationBuilder.DropTable(
                 name: "Zaposleni");
 
             migrationBuilder.DropTable(
-                name: "DelovnaMesta");
+                name: "Izobrazevanja");
 
             migrationBuilder.DropTable(
                 name: "DelovneUre");
 
             migrationBuilder.DropTable(
                 name: "Dopusti");
-
-            migrationBuilder.DropTable(
-                name: "Izobrazevanja");
         }
     }
 }
