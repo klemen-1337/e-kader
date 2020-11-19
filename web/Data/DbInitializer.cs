@@ -19,6 +19,17 @@ namespace web.Data
                 return;   // DB has been seeded
             }
 
+            var adminRole = new IdentityRole{Name="Admin",NormalizedName="ADMIN"};         
+            context.Roles.Add(adminRole);
+
+            var managerRole = new IdentityRole{Name="Manager",NormalizedName="MANAGER"};
+            context.Roles.Add(managerRole);
+
+            var workerRole = new IdentityRole{Name="Worker",NormalizedName="WORKER"};
+            context.Roles.Add(workerRole);
+
+            context.SaveChanges();
+
             var zaposleni = new Zaposlen[]
             {
                 new Zaposlen{Ime="Miha",Priimek="Žnidar",Naslov="Tvoja mt planina", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), DatumZaposlitve=DateTime.Parse("2019-09-01"), Spol="Ž"},
@@ -70,11 +81,25 @@ namespace web.Data
 
 
             var hasher = new PasswordHasher<Uporabniki>();
-            Zaposlen zapAdmin = new Zaposlen{Ime="admin",Priimek="admin",Naslov="Tvoja mt planina", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), DatumZaposlitve=DateTime.Parse("2019-09-01"), Spol="Ž"};
+            
+            Zaposlen zapAdmin = new Zaposlen{Ime="admin",Priimek="admin",Naslov="Cesta pod goro 69", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), DatumZaposlitve=DateTime.Parse("2019-09-01"), Spol="Ž",Kadrovanje=true};
             String pass = hasher.HashPassword(null, "Admin123!");
             context.Zaposleni.Add(zapAdmin);
-            context.Users.Add(new Uporabniki{ Id="a0e274cd-b2ea-462f-aa63-ff77f34c0cc1",UserName = "admin@gmail.com",NormalizedUserName="ADMIN@GMAIL.COM",NormalizedEmail="ADMIN@GMAIL.COM",Email = "admin@gmail.com",PasswordHash=pass ,Zaposlen=zapAdmin});
-            
+            Uporabniki upoAdmin = new Uporabniki{UserName = "admin@gmail.com",NormalizedUserName="ADMIN@GMAIL.COM",NormalizedEmail="ADMIN@GMAIL.COM",Email = "admin@gmail.com",PasswordHash=pass ,Zaposlen=zapAdmin };
+            context.Users.Add(upoAdmin);
+
+            Zaposlen zapWorker = new Zaposlen{Ime="Jaka",Priimek="Novak",Naslov="Tvoja mt planina", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), DatumZaposlitve=DateTime.Parse("2019-09-01"), Spol="Ž",Kadrovanje=false};
+            String pass2 = hasher.HashPassword(null, "Admin123!");
+            context.Zaposleni.Add(zapWorker);
+            Uporabniki upoWorker = new Uporabniki{UserName = "jaka@gmail.com",NormalizedUserName="JAKA@GMAIL.COM",NormalizedEmail="JAKA@GMAIL.COM",Email = "jaka@gmail.com",PasswordHash=pass2 ,Zaposlen=zapWorker};
+            context.Users.Add(upoWorker);
+
+            var roleAdmin = new IdentityUserRole<string>{UserId = upoAdmin.Id,RoleId = adminRole.Id};
+            var roleWorker = new IdentityUserRole<string>{UserId = upoWorker.Id,RoleId = workerRole.Id};
+
+            context.UserRoles.Add(roleAdmin);
+            context.UserRoles.Add(roleWorker);
+
             context.SaveChanges();
         }
     }

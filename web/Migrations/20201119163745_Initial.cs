@@ -104,6 +104,7 @@ namespace web.Migrations
                     DatumZaposlitve = table.Column<DateTime>(nullable: false),
                     Spol = table.Column<string>(nullable: true),
                     PhotoPath = table.Column<string>(nullable: true),
+                    Kadrovanje = table.Column<bool>(nullable: false),
                     DelovneUreID = table.Column<int>(nullable: true),
                     DopustID = table.Column<int>(nullable: true)
                 },

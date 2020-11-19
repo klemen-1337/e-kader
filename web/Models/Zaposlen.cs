@@ -15,6 +15,7 @@ namespace web.Models
         public string Spol { get; set; }
         public string PhotoPath { get; set; }
         public ICollection<Zaposlitve> Zaposlitve { get; set; }
+        public bool Kadrovanje { get; set;}
         
     }
 }

@@ -74,7 +74,12 @@
                             <label class="custom-file-label" for="customFile">Izberi sliko</label>  
                         </div>  
                     <span asp-validation-for="Input.Slika" class="text-danger"></span>  
-                </div>  
+                </div> 
+                <div class="form-group">
+                    <label asp-for="Input.Kadrovska" class="control-label"></label>
+                    <input asp-for="Input.Kadrovska" class="form-control" />
+                    <span asp-validation-for="Input.Kadrovska" class="text-danger"></span>
+                </div> 
                 <button type="submit" class="btn btn-primary">Registriraj uporabnika</button>
             </div>
             </div>

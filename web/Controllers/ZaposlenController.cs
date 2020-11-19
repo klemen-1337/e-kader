@@ -10,10 +10,11 @@ using web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Microsoft.AspNetCore.Identity;
 
 namespace web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin,Manager")]
     public class ZaposlenController : Controller
     {
         private readonly EkadriContext _context;
@@ -124,6 +125,7 @@ namespace web.Controllers
             {
                 return NotFound();
             }
+
             return View(zaposlen);
         }
 
@@ -132,7 +134,7 @@ namespace web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-         public async Task<IActionResult> Edit(int id, [Bind("ID,Ime,Priimek,Naslov,Telefon,DatumRojstva,DatumZaposlitve,Spol")] Zaposlen zaposlen)
+         public async Task<IActionResult> Edit(int id, [Bind("ID,Ime,Priimek,Naslov,Telefon,DatumRojstva,DatumZaposlitve,Spol,Kadrovanje")] Zaposlen zaposlen)
         {
             if (id != zaposlen.ID)
             {
@@ -142,7 +144,22 @@ namespace web.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
+                {   IdentityRole role;
+                    if(zaposlen.Kadrovanje){
+                        role = await _context.Roles.FirstOrDefaultAsync(m => m.Name == "Manager");
+                        
+                    }else{
+                       role = await _context.Roles.FirstOrDefaultAsync(m => m.Name == "Worker");
+                    }
+                    var user = await _context.Users.FirstOrDefaultAsync(m => m.Zaposlen.ID == id);
+                    var userRole = await _context.UserRoles.FirstOrDefaultAsync(m => m.UserId == user.Id);
+                    if(userRole != null){
+                        _context.UserRoles.Remove(userRole);
+                    }
+                    var userRoleNew = new IdentityUserRole<string>{UserId = user.Id,RoleId = role.Id};
+                    _context.UserRoles.Add(userRoleNew);
+                        
+
                     _context.Update(zaposlen);
                     await _context.SaveChangesAsync();
                 }

@@ -104,6 +104,9 @@ namespace web.Areas.Identity.Pages.Account
             [Display(Name = "Slika")]
             public IFormFile Slika {get; set;}
 
+            [Display(Name = "Kadrovska")]
+            public Boolean Kadrovska {get; set;}
+
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -138,12 +141,15 @@ namespace web.Areas.Identity.Pages.Account
             {
                 var zapView = new ZaposlenViewModel{Ime=Input.Ime,Priimek=Input.Priimek,Naslov=Input.Naslov, Telefon=Input.Telefon, DatumRojstva=Input.DatumRojstva, DatumZaposlitve=Input.DatumZaposlitve, Spol=Input.Spol, Slika=Input.Slika};
                 string uniqueFileName = UploadedFile(zapView);  
-                var zapTmp = new Zaposlen{Ime=Input.Ime,Priimek=Input.Priimek,Naslov=Input.Naslov, Telefon=Input.Telefon, DatumRojstva=Input.DatumRojstva, DatumZaposlitve=Input.DatumZaposlitve, Spol=Input.Spol, PhotoPath = uniqueFileName};
+                var zapTmp = new Zaposlen{Ime=Input.Ime,Priimek=Input.Priimek,Naslov=Input.Naslov, Telefon=Input.Telefon, DatumRojstva=Input.DatumRojstva, DatumZaposlitve=Input.DatumZaposlitve, Spol=Input.Spol, PhotoPath = uniqueFileName,Kadrovanje=Input.Kadrovska};
                 var user = new Uporabniki { UserName = Input.Email, Email = Input.Email, Zaposlen=zapTmp };
-                
-
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                if(Input.Kadrovska){
+                    var roleResult = await _userManager.AddToRoleAsync(user,"Manager");
+                }else{
+                    var roleResult = await _userManager.AddToRoleAsync(user,"Worker");
+                }
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

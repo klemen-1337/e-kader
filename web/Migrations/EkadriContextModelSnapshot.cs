@@ -342,6 +342,9 @@ namespace web.Migrations
                     b.Property<string>("Ime")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Kadrovanje")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Naslov")
                         .HasColumnType("nvarchar(max)");
 

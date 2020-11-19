@@ -10,7 +10,7 @@ using web.Data;
 namespace web.Migrations
 {
     [DbContext(typeof(EkadriContext))]
-    [Migration("20201117222808_Initial")]
+    [Migration("20201119163745_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -343,6 +343,9 @@ namespace web.Migrations
 
                     b.Property<string>("Ime")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Kadrovanje")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Naslov")
                         .HasColumnType("nvarchar(max)");
