@@ -10,7 +10,7 @@ using web.Data;
 namespace web.Migrations
 {
     [DbContext(typeof(EkadriContext))]
-    [Migration("20201120145708_Initial")]
+    [Migration("20201121145158_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -216,8 +216,8 @@ namespace web.Migrations
                     b.Property<DateTime>("Datum")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Preostanek")
-                        .HasColumnType("int");
+                    b.Property<string>("UporabnikId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("UraKonca")
                         .HasColumnType("datetime2");
@@ -226,6 +226,8 @@ namespace web.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("UporabnikId");
 
                     b.ToTable("Dopusti");
                 });
@@ -340,9 +342,6 @@ namespace web.Migrations
                     b.Property<DateTime>("DatumZaposlitve")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DopustID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Ime")
                         .HasColumnType("nvarchar(max)");
 
@@ -365,8 +364,6 @@ namespace web.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("DopustID");
 
                     b.ToTable("Zaposleni");
                 });
@@ -464,18 +461,18 @@ namespace web.Migrations
                         .HasForeignKey("UporabnikId");
                 });
 
+            modelBuilder.Entity("web.Models.Dopust", b =>
+                {
+                    b.HasOne("web.Models.Uporabniki", "Uporabnik")
+                        .WithMany()
+                        .HasForeignKey("UporabnikId");
+                });
+
             modelBuilder.Entity("web.Models.Uporabniki", b =>
                 {
                     b.HasOne("web.Models.Zaposlen", "Zaposlen")
                         .WithMany()
                         .HasForeignKey("ZaposlenID");
-                });
-
-            modelBuilder.Entity("web.Models.Zaposlen", b =>
-                {
-                    b.HasOne("web.Models.Dopust", null)
-                        .WithMany("Zaposleni")
-                        .HasForeignKey("DopustID");
                 });
 
             modelBuilder.Entity("web.Models.Zaposlitve", b =>

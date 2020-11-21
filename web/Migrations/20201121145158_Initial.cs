@@ -22,22 +22,6 @@ namespace web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Dopusti",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Datum = table.Column<DateTime>(nullable: false),
-                    UraZacetka = table.Column<DateTime>(nullable: false),
-                    UraKonca = table.Column<DateTime>(nullable: false),
-                    Preostanek = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Dopusti", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Izobrazevanja",
                 columns: table => new
                 {
@@ -52,6 +36,27 @@ namespace web.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Izobrazevanja", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Zaposleni",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Ime = table.Column<string>(nullable: true),
+                    Priimek = table.Column<string>(nullable: true),
+                    Naslov = table.Column<string>(nullable: true),
+                    Telefon = table.Column<int>(nullable: false),
+                    DatumRojstva = table.Column<DateTime>(nullable: false),
+                    DatumZaposlitve = table.Column<DateTime>(nullable: false),
+                    Spol = table.Column<string>(nullable: true),
+                    PhotoPath = table.Column<string>(nullable: true),
+                    Kadrovanje = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Zaposleni", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -73,34 +78,6 @@ namespace web.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Zaposleni",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Ime = table.Column<string>(nullable: true),
-                    Priimek = table.Column<string>(nullable: true),
-                    Naslov = table.Column<string>(nullable: true),
-                    Telefon = table.Column<int>(nullable: false),
-                    DatumRojstva = table.Column<DateTime>(nullable: false),
-                    DatumZaposlitve = table.Column<DateTime>(nullable: false),
-                    Spol = table.Column<string>(nullable: true),
-                    PhotoPath = table.Column<string>(nullable: true),
-                    Kadrovanje = table.Column<bool>(nullable: false),
-                    DopustID = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Zaposleni", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Zaposleni_Dopusti_DopustID",
-                        column: x => x.DopustID,
-                        principalTable: "Dopusti",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -291,6 +268,28 @@ namespace web.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Dopusti",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Datum = table.Column<DateTime>(nullable: false),
+                    UraZacetka = table.Column<DateTime>(nullable: false),
+                    UraKonca = table.Column<DateTime>(nullable: false),
+                    UporabnikId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Dopusti", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Dopusti_AspNetUsers_UporabnikId",
+                        column: x => x.UporabnikId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -346,9 +345,9 @@ namespace web.Migrations
                 column: "UporabnikId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Zaposleni_DopustID",
-                table: "Zaposleni",
-                column: "DopustID");
+                name: "IX_Dopusti_UporabnikId",
+                table: "Dopusti",
+                column: "UporabnikId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Zaposlitve_DelovnaMestaID",
@@ -382,6 +381,9 @@ namespace web.Migrations
                 name: "DelovneUre");
 
             migrationBuilder.DropTable(
+                name: "Dopusti");
+
+            migrationBuilder.DropTable(
                 name: "Zaposlitve");
 
             migrationBuilder.DropTable(
@@ -398,9 +400,6 @@ namespace web.Migrations
 
             migrationBuilder.DropTable(
                 name: "Izobrazevanja");
-
-            migrationBuilder.DropTable(
-                name: "Dopusti");
         }
     }
 }
