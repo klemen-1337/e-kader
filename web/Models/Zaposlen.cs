@@ -11,7 +11,6 @@ namespace web.Models
         public string Naslov { get; set; }
         public int Telefon { get; set; }
         public DateTime DatumRojstva { get; set; }
-        public DateTime DatumZaposlitve { get; set; }
         public string Spol { get; set; }
         public string PhotoPath { get; set; }
         public ICollection<Zaposlitve> Zaposlitve { get; set; }

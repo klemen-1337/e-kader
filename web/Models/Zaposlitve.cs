@@ -9,7 +9,7 @@ namespace web.Models
     {
         public int ID { get; set; }
         public int ZaposlenID { get; set; }
-        public int DelovnoMestoID { get; set; }
+        public int DelovnaMestaID { get; set; }
         public DateTime DatumZaposlitve { get; set; }
         public Zaposlen Zaposlen { get; set; }
         public DelovnaMesta DelovnaMesta { get; set; }

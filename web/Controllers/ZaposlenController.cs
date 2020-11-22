@@ -43,6 +43,7 @@ namespace web.Controllers
                                         || z.Ime.Contains(searchString)
                                         || z.Naslov.Contains(searchString)
                                         || z.Spol.Contains(searchString)
+                                        || z.ID.ToString().Contains(searchString)
                                         );
             }
             //return View(await _context.Zaposleni.ToListAsync());

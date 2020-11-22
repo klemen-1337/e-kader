@@ -337,9 +337,6 @@ namespace web.Migrations
                     b.Property<DateTime>("DatumRojstva")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DatumZaposlitve")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Ime")
                         .HasColumnType("nvarchar(max)");
 
@@ -376,10 +373,7 @@ namespace web.Migrations
                     b.Property<DateTime>("DatumZaposlitve")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DelovnaMestaID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DelovnoMestoID")
+                    b.Property<int>("DelovnaMestaID")
                         .HasColumnType("int");
 
                     b.Property<int>("ZaposlenID")
@@ -477,7 +471,9 @@ namespace web.Migrations
                 {
                     b.HasOne("web.Models.DelovnaMesta", "DelovnaMesta")
                         .WithMany("Zaposlitve")
-                        .HasForeignKey("DelovnaMestaID");
+                        .HasForeignKey("DelovnaMestaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("web.Models.Zaposlen", "Zaposlen")
                         .WithMany("Zaposlitve")

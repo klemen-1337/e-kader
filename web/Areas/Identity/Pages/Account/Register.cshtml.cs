@@ -92,11 +92,6 @@ namespace web.Areas.Identity.Pages.Account
             public DateTime DatumRojstva {get; set;}
 
             [Required]
-            [Display(Name = "DatumZaposlitve")]
-            [DataType(DataType.Date)]
-            public DateTime DatumZaposlitve {get; set;}
-
-            [Required]
             [Display(Name = "Spol")]
             public String Spol {get; set;}
             
@@ -139,9 +134,9 @@ namespace web.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var zapView = new ZaposlenViewModel{Ime=Input.Ime,Priimek=Input.Priimek,Naslov=Input.Naslov, Telefon=Input.Telefon, DatumRojstva=Input.DatumRojstva, DatumZaposlitve=Input.DatumZaposlitve, Spol=Input.Spol, Slika=Input.Slika};
+                var zapView = new ZaposlenViewModel{Ime=Input.Ime,Priimek=Input.Priimek,Naslov=Input.Naslov, Telefon=Input.Telefon, DatumRojstva=Input.DatumRojstva, Spol=Input.Spol, Slika=Input.Slika};
                 string uniqueFileName = UploadedFile(zapView);  
-                var zapTmp = new Zaposlen{Ime=Input.Ime,Priimek=Input.Priimek,Naslov=Input.Naslov, Telefon=Input.Telefon, DatumRojstva=Input.DatumRojstva, DatumZaposlitve=Input.DatumZaposlitve, Spol=Input.Spol, PhotoPath = uniqueFileName,Kadrovanje=Input.Kadrovska};
+                var zapTmp = new Zaposlen{Ime=Input.Ime,Priimek=Input.Priimek,Naslov=Input.Naslov, Telefon=Input.Telefon, DatumRojstva=Input.DatumRojstva, Spol=Input.Spol, PhotoPath = uniqueFileName,Kadrovanje=Input.Kadrovska};
                 var user = new Uporabniki { UserName = Input.Email, Email = Input.Email, Zaposlen=zapTmp };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);

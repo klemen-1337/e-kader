@@ -49,7 +49,6 @@ namespace web.Migrations
                     Naslov = table.Column<string>(nullable: true),
                     Telefon = table.Column<int>(nullable: false),
                     DatumRojstva = table.Column<DateTime>(nullable: false),
-                    DatumZaposlitve = table.Column<DateTime>(nullable: false),
                     Spol = table.Column<string>(nullable: true),
                     PhotoPath = table.Column<string>(nullable: true),
                     Kadrovanje = table.Column<bool>(nullable: false)
@@ -140,9 +139,8 @@ namespace web.Migrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ZaposlenID = table.Column<int>(nullable: false),
-                    DelovnoMestoID = table.Column<int>(nullable: false),
-                    DatumZaposlitve = table.Column<DateTime>(nullable: false),
-                    DelovnaMestaID = table.Column<int>(nullable: true)
+                    DelovnaMestaID = table.Column<int>(nullable: false),
+                    DatumZaposlitve = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -152,7 +150,7 @@ namespace web.Migrations
                         column: x => x.DelovnaMestaID,
                         principalTable: "DelovnaMesta",
                         principalColumn: "DelovnaMestaID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Zaposlitve_Zaposleni_ZaposlenID",
                         column: x => x.ZaposlenID,

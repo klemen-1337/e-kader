@@ -32,13 +32,13 @@ namespace web.Data
 
             var zaposleni = new Zaposlen[]
             {
-                new Zaposlen{Ime="Miha",Priimek="Žnidar",Naslov="Tvoja mt planina", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), DatumZaposlitve=DateTime.Parse("2019-09-01"), Spol="Ž"},
-                new Zaposlen{Ime="Klemen",Priimek="Štefe",Naslov="Tvoja mt planina", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), DatumZaposlitve=DateTime.Parse("2019-09-01"), Spol="Ž"},
-                new Zaposlen{Ime="Marjan",Priimek="Kovač",Naslov="Tvoja mt planina", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), DatumZaposlitve=DateTime.Parse("2019-09-01"), Spol="Ž"},
-                new Zaposlen{Ime="Janez",Priimek="Pegam",Naslov="Tvoja mt planina", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), DatumZaposlitve=DateTime.Parse("2019-09-01"), Spol="Ž"},
-                new Zaposlen{Ime="Florjan",Priimek="Gasilec",Naslov="Tvoja mt planina", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), DatumZaposlitve=DateTime.Parse("2019-09-01"), Spol="Ž"},
-                new Zaposlen{Ime="Cene",Priimek="Novak",Naslov="Tvoja mt planina", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), DatumZaposlitve=DateTime.Parse("2019-09-01"), Spol="Ž"},
-                new Zaposlen{Ime="Mirjan",Priimek="Salam",Naslov="Tvoja mt planina", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), DatumZaposlitve=DateTime.Parse("2019-09-01"), Spol="Ž"},                               
+                new Zaposlen{Ime="Miha",Priimek="Žnidar",Naslov="Tvoja mt planina", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), Spol="Ž"},
+                new Zaposlen{Ime="Klemen",Priimek="Štefe",Naslov="Tvoja mt planina", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), Spol="Ž"},
+                new Zaposlen{Ime="Marjan",Priimek="Kovač",Naslov="Tvoja mt planina", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), Spol="Ž"},
+                new Zaposlen{Ime="Janez",Priimek="Pegam",Naslov="Tvoja mt planina", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), Spol="Ž"},
+                new Zaposlen{Ime="Florjan",Priimek="Gasilec",Naslov="Tvoja mt planina", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), Spol="Ž"},
+                new Zaposlen{Ime="Cene",Priimek="Novak",Naslov="Tvoja mt planina", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), Spol="Ž"},
+                new Zaposlen{Ime="Mirjan",Priimek="Salam",Naslov="Tvoja mt planina", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), Spol="Ž"},                               
             };
 
             foreach (Zaposlen zaposlen in zaposleni)
@@ -65,13 +65,13 @@ namespace web.Data
 
             var zaposlitve = new Zaposlitve[]{
 
-                new Zaposlitve{ZaposlenID = 1, DelovnoMestoID=420, DatumZaposlitve=DateTime.Parse("2019-09-01")},
-                new Zaposlitve{ZaposlenID = 2, DelovnoMestoID=123, DatumZaposlitve=DateTime.Parse("2019-09-01")},
-                new Zaposlitve{ZaposlenID = 3, DelovnoMestoID=420, DatumZaposlitve=DateTime.Parse("2019-09-01")},
-                new Zaposlitve{ZaposlenID = 4, DelovnoMestoID=231, DatumZaposlitve=DateTime.Parse("2019-09-01")},
-                new Zaposlitve{ZaposlenID = 5, DelovnoMestoID=666, DatumZaposlitve=DateTime.Parse("2019-09-01")},
-                new Zaposlitve{ZaposlenID = 6, DelovnoMestoID=222, DatumZaposlitve=DateTime.Parse("2019-09-01")},
-                new Zaposlitve{ZaposlenID = 7, DelovnoMestoID=420, DatumZaposlitve=DateTime.Parse("2019-09-01")},
+                new Zaposlitve{ZaposlenID = 1, DelovnaMestaID=420, DatumZaposlitve=DateTime.Parse("2019-09-01")},
+                new Zaposlitve{ZaposlenID = 2, DelovnaMestaID=123, DatumZaposlitve=DateTime.Parse("2019-09-01")},
+                new Zaposlitve{ZaposlenID = 3, DelovnaMestaID=420, DatumZaposlitve=DateTime.Parse("2019-09-01")},
+                new Zaposlitve{ZaposlenID = 4, DelovnaMestaID=231, DatumZaposlitve=DateTime.Parse("2019-09-01")},
+                new Zaposlitve{ZaposlenID = 5, DelovnaMestaID=666, DatumZaposlitve=DateTime.Parse("2019-09-01")},
+                new Zaposlitve{ZaposlenID = 6, DelovnaMestaID=222, DatumZaposlitve=DateTime.Parse("2019-09-01")},
+                new Zaposlitve{ZaposlenID = 7, DelovnaMestaID=420, DatumZaposlitve=DateTime.Parse("2019-09-01")},
             };
             foreach (Zaposlitve zap in zaposlitve)
             {
@@ -82,13 +82,13 @@ namespace web.Data
 
             var hasher = new PasswordHasher<Uporabniki>();
             
-            Zaposlen zapAdmin = new Zaposlen{Ime="admin",Priimek="admin",Naslov="Cesta pod goro 69", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), DatumZaposlitve=DateTime.Parse("2019-09-01"), Spol="Ž",Kadrovanje=true};
+            Zaposlen zapAdmin = new Zaposlen{Ime="admin",Priimek="admin",Naslov="Cesta pod goro 69", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), Spol="Ž",Kadrovanje=true};
             String pass = hasher.HashPassword(null, "Admin123!");
             context.Zaposleni.Add(zapAdmin);
             Uporabniki upoAdmin = new Uporabniki{UserName = "admin@gmail.com",NormalizedUserName="ADMIN@GMAIL.COM",NormalizedEmail="ADMIN@GMAIL.COM",Email = "admin@gmail.com",PasswordHash=pass ,Zaposlen=zapAdmin };
             context.Users.Add(upoAdmin);
 
-            Zaposlen zapWorker = new Zaposlen{Ime="Jaka",Priimek="Novak",Naslov="Tvoja mt planina", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), DatumZaposlitve=DateTime.Parse("2019-09-01"), Spol="Ž",Kadrovanje=false};
+            Zaposlen zapWorker = new Zaposlen{Ime="Jaka",Priimek="Novak",Naslov="Tvoja mt planina", Telefon=420420420, DatumRojstva=DateTime.Parse("2019-09-01"), Spol="Ž",Kadrovanje=false};
             String pass2 = hasher.HashPassword(null, "Admin123!");
             context.Zaposleni.Add(zapWorker);
             Uporabniki upoWorker = new Uporabniki{UserName = "jaka@gmail.com",NormalizedUserName="JAKA@GMAIL.COM",NormalizedEmail="JAKA@GMAIL.COM",Email = "jaka@gmail.com",PasswordHash=pass2 ,Zaposlen=zapWorker};
