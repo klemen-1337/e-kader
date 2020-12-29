@@ -30,7 +30,7 @@ namespace web
             services.AddControllersWithViews();
 
                 services.AddDbContext<EkadriContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("EkadriContext")));
+                options.UseSqlServer(Configuration.GetConnectionString("AzureContext")));
                 services.AddIdentity<Uporabniki, IdentityRole>(options => 
                     options.Stores.MaxLengthForKeys = 128)
                         .AddEntityFrameworkStores<EkadriContext>()
