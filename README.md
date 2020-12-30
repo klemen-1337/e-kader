@@ -13,7 +13,6 @@ Celotni sistem bo dostopen samo priviligiranim uporabnikom (delavcem v kadrovski
 Omogočal bo dodajanje, odvzemanje novih zaposlenih, pregled informacij o posamezniku, pregled delovnih ur, izbiro dopusta, urnik in še nekaj podrobnosti.
 Vsi zaposleni, ter njihovi podatki so zapisani v skupni bazi, ki temelji na Microsoftovi SQL server bazi.
 
-Tako, izgledata strani za vpogled nad zaposlenimi, in razporeditev zaposlenih po delovnih mestih. Vpogled na njiju imajo samo osebe z nazivom kadrovska služba, ter seveda admin.
 
 <h4 align="center">Pregled zaposlenih</h4>
 
@@ -41,7 +40,7 @@ Android odjemalec
 Z informacijskim sistemom lahko poleg spletne različice komunicirate preko **android aplikacije e-kader**. Z njim sta podprta osnovna **GET**
 ter **POST** zahtevka preko API vmesnika implementiranega s pomočjo Swaggerja.
 
-**Project:**: https://github.com/klemen-1337/e-kader-app
+**Project:** https://github.com/klemen-1337/e-kader-app
 
 Razporeditev dela
 -----------------
