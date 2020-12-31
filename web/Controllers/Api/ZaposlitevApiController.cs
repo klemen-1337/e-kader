@@ -9,11 +9,13 @@ using web.Data;
 using web.Models;
 using web.Filters;
 
+
 namespace web.Controllers_Api
 {
     [Route("api/[controller]")]
     [ApiController]
     [ApiKeyAuth]
+
     public class ZaposlitevApiController : ControllerBase
     {
         private readonly EkadriContext _context;
