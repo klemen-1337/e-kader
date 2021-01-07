@@ -49,4 +49,9 @@ Ideja se je porodila, saj je Miha želel izdelati podobno aplikacijo za neko res
 Klemen je vzpostavil github z osnovno aplikacijo, na poratlu Discord sva se zmenila in porazdelila delo, ter probleme, kjer se je zatikalo probavala reševati skupaj.
 Najprej, sva skupaj narisala konceptualni model podatkovne baze, Klemen je spisal modele, jih zgeneriral in dodal funkcionalnost dodajanja slik. Miha pa se je lotil izdelovanja logina, registracije, ter avtorizacije. Za izdelavo drugega dela seminarse naloge, je Klemen objavil aplikacijo ter podatkovno bazo v azure. Miha pa je med tem že delal na REST programskem vmesniku in dodal swagger, ki je Klemenu koristil, kot dokumentacija ob izdelavi android aplikacije. Miha je kasneje dodal tudi avtentikacijo na REST vmesnik, za to so bili potrebni manjši popravki pri klicu REST api-jev iz mobilne aplikacije.
 
+Podatkovna baza
+-----------------
+<img src="web/wwwroot/Images/DB.PNG">
+Najin podatkovni model je sestavljen iz tabel, ki sva jih ustvarila midva, kot iz tabel, ki so ustvarjene ob uporabi knjiznjice Microsoft Identity AspNetCore predvsem tabele za delo z uporabniki, ter pravicami. Nekako model temelji na zaposlenem, ki je povezan z AspNetUser, z podatki za avtentikacijo in avtorizacijo. Povezan je tudi na tabeli Dopust in DelovneUre. Ob vnosu zaposlenega pa moramo tudi ustvariti zaposlitev, ter ga dodani na izbrano delovno mesto
+
 
